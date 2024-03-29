@@ -1,5 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import {initializeApp} from 'firebase/app';
+import {getAuth} from 'firebase/auth';
+import {initializeFirestore} from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVVL2C5Tuz5HQSjptupQxc5yIjdtEA7XA",
@@ -12,10 +13,18 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const initFirebase = initializeApp(firebaseConfig);
+//export const initFirebase = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+});
 
-export const db = getFirestore(initFirebase);
+export {auth, db};
+
+//export const db = getFirestore(initFirebase);
 
 //apiKey: "AIzaSyCVVL2C5Tuz5HQSjptupQxc5yIjdtEA7XA",
 //authDomain: "lab-seeds.firebaseapp.com",

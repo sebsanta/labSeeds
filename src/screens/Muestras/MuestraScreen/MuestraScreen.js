@@ -3,6 +3,8 @@ import { View, Text } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { LoadingModal } from "../../../components/Shared";
+import { ListMuestra } from "../../../components/Muestras";
 import { screen, db } from "../../../utils";
 import { styles } from './MuestraScreen.styles';
 
@@ -10,7 +12,7 @@ import { styles } from './MuestraScreen.styles';
 export function MuestraScreen(props){
     const { navigation } = props;
     const [currentUser, setCurrentUser] = useState(null);
-    const [muestraLista, setMuestraLista] = useState(null)
+    const [muestras, setMuestras] = useState(null)
 
     useEffect(() => {
         const auth = getAuth();
@@ -25,10 +27,11 @@ export function MuestraScreen(props){
             collection(db, "muestras"),
             orderBy("createdAt", "desc")
             );
-    
     //guarda en una lista el listado de muestras
         onSnapshot(q, (snapshot) => {
-            setMuestraLista(snapshot)
+            console.log(snapshot.docs);
+            setMuestras(snapshot.docs);
+
         })
     },[]);
 
@@ -41,7 +44,13 @@ export function MuestraScreen(props){
     };
     return(
         <View style={styles.content}>
-            <Text>Estamos en la muestra locaciones</Text>
+            {!muestras ? (
+                    <LoadingModal show text="Cargando"/>
+                ):(
+                    <ListMuestra muestras={muestras}/>
+                )}
+
+           
             {currentUser && 
                   <Button 
                   title="Ingresar nueva muestra +" 
