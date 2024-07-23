@@ -32,7 +32,7 @@ function screenOptionsTab(route, color, size){
     let iconName;
 
     if(route.name === screen.muestra.tab){
-        iconName = "seed";
+        iconName = "water-check";
     }
     if(route.name === screen.ranking.tab){
         iconName = "weather-fog";

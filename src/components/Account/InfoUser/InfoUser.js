@@ -37,7 +37,7 @@ export function InfoUser(props) {
         updatePhotoUrl(snapshot.metadata.fullPath)
     })
         .catch((error) => {
-        console.log(error);
+    //    console.log(error);
         return error;
     });
 

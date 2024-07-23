@@ -1,16 +1,23 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { View } from 'react-native';
-import { Image, Input , Text } from '@rneui/themed';
+import { Image, Input , Text, Icon } from '@rneui/themed';
+import { MapForm } from "../MapForm";
+import RNPickerSelect from "react-native-picker-select";
 import { styles } from "./InfoForm.styles";
+import { number } from 'yup';
 
 export function InfoForm(props) {
 
     const {formik} = props;
+    const [showMap, setShowMap] = useState(false); 
+    const onOpenCloseMap = () => setShowMap(prevState => !prevState);
+
 
   return (
+      <>
     <View style={styles.content}>
       <Text></Text>
-      <Text style={styles.textTitulo}>Formulario de almácigo</Text>
+      <Text style={styles.textTitulo}>Formulario muestras</Text>
       <Image 
           source={require("../../../../../assets/img/image_formulario.png")}
           style={styles.imagen}
@@ -18,144 +25,126 @@ export function InfoForm(props) {
       />
       <Text></Text>
       <Text style={styles.textTitle}>Datos generales de muestra </Text> 
+       <RNPickerSelect
+       useNativeAndroidPickerStyle={false} 
+                 style={{
+                            inputAndroid:{
+                            fontSize: 18,
+                            color:"#716E6C",
+                            height:50,
+                            width:365,           
+                            marginBottom:15,                 
+                            textAlign:"left",
+                            borderWidth: 1,
+                            borderColor: 'gray',
+                            borderRadius: 8,
+                            paddingLeft:8,
+                            paddingRight:30
+                            },
+                            inputIOS: {
+                                   color: '#716E6C',
+                                   paddingTop: 15,
+                                   fontSize: 18,
+                                   paddingHorizontal: 10,
+                                   paddingBottom: 15,
+                                   marginBottom:20,
+                                   borderWidth: 1,
+                                   borderColor: 'gray',
+                                   borderRadius: 8,
+                            },
+                 }}
+                 placeholder={{ label: "Selecciona una región", value: null, color:'#716E6C' }}
+                 items={[
+                     { label: "I Región de Arica, Parinacota y Tarapacá", value: "I Región de Arica, Parinacota y Tarapacá"},
+                     { label: "II Región de Antofagasta", value: "II Región de Antofagasta"},
+                     { label: "III Región de Atacama y Coquimbo", value: "III Región de Atacama y Coquimbo"},
+                     { label: "IV Región de Valparaíso", value: "IV Región de Valparaíso" },
+                     { label: "Metropolitana", value: "Metropolitana"},
+                     { label: "V Región de Ohiggins", value: "V Región de Ohiggins"},
+                     { label: "VI Región del Maule", value: "VI Región del Maule"},
+                     { label: "VII Región de Ñuble y BíoBío", value: "VII Región de Ñuble y BíoBío"},
+                     { label: "VIII Región de La Araucanía", value: "VIII Región de La Araucanía"},
+                     { label: "IX Región de Los Ríos", value: "IX Región de Los Ríos"},
+                     { label: "X Región de Los Lagos", value: "X Región de Los Lagos"},
+                     { label: "XI Región de Magallanes", value: "XI Región de Magallanes"},
+                 ]}
+                 onValueChange={(value) => formik.setFieldValue("region",value)}
+       />   
       <Input 
-             placeholder='Ingrese número de muestra' 
+             placeholder='Ingrese comuna'
+             onChangeText={(text) => formik.setFieldValue("comuna", text)}
+             errorMessage={formik.errors.comuna}
+      />
+      <Input 
+             
+             placeholder='Ingrese dirección'
+             rightIcon={{
+                  type:"material-community",
+                  name:"map-marker-radius",
+                  color:getColorIconMap(formik),
+                  onPress: onOpenCloseMap,
+             }}
+             onChangeText={(text) => formik.setFieldValue("direccion", text)}
+             errorMessage={formik.errors.direccion}
+      />
+      <Input 
+             placeholder='Ingrese dureza en PPM'
              keyboardType='numeric'
-             onChangeText={(text) => formik.setFieldValue("numeroMuestra", text)}
-             errorMessage={formik.errors.numeroMuestra}
+             type="number"
+             onChangeText={(text) => (formik.setFieldValue("ppm", parseInt(text)))}
+             errorMessage={formik.errors.ppm}
       />
-      <Input 
-             placeholder='Ingrese clasificación de muestra'
-             onChangeText={(text) => formik.setFieldValue("clasificacionMuestra", text)}
-             errorMessage={formik.errors.clasificacionMuestra}
-      />
-      <Input 
-             placeholder='Ingrese tipo de semilla'
-             onChangeText={(text) => formik.setFieldValue("tipoSemilla", text)}
-             errorMessage={formik.errors.tipoSemilla}
-      />
-      <Input 
-             placeholder='Ingrese marca de semilla'
-             onChangeText={(text) => formik.setFieldValue("marcaSemilla", text)}
-             errorMessage={formik.errors.marcaSemilla}
-      />
-      <Input 
-             placeholder='Ingrese proveedor de semilla'
-             onChangeText={(text) => formik.setFieldValue("proveedorSemilla", text)}
-             errorMessage={formik.errors.proveedorSemilla}
-      />
-      <Text style={styles.textTitle}>Datos de tipo de sustrato utilizado </Text> 
-      <Input 
-             placeholder='Ingrese tipo de sustrato'
-             onChangeText={(text) => formik.setFieldValue("tipoSustrato", text)}
-             errorMessage={formik.errors.tipoSustrato}
-      />
-      <Input 
-             placeholder='Ingrese marca de sustrato'
-             onChangeText={(text) => formik.setFieldValue("marcaSustrato", text)}
-             errorMessage={formik.errors.marcaSustrato}
-      />
-      <Input 
-             placeholder='Ingrese proveedor de sustrato'
-             onChangeText={(text) => formik.setFieldValue("proveedorSustrato", text)}
-             errorMessage={formik.errors.proveedorSustrato}
-      />
-      <Text style={styles.textTitle}>Datos de muestra de agua</Text> 
-      <Input 
-             placeholder='Ingrese tipo de agua aplicada'
-             onChangeText={(text) => formik.setFieldValue("tipoAgua", text)}
-             errorMessage={formik.errors.tipoAgua}
-      />
-      <Input 
-            placeholder='Ingrese proveedor de agua'
-            onChangeText={(text) => formik.setFieldValue("proveedorAgua", text)}
-            errorMessage={formik.errors.proveedorAgua}
-      />
-      <Input 
-            placeholder='Ingrese marca de agua'
-            onChangeText={(text) => formik.setFieldValue("marcaAgua", text)}
-            errorMessage={formik.errors.marcaAgua}
-      />
-      <Input 
-            placeholder='Ingrese PH del agua' 
-            keyboardType='numeric'
-            onChangeText={(text) => formik.setFieldValue("phAgua", text)}
-            errorMessage={formik.errors.phAgua}
-      />
-      <Input 
-            placeholder='Ingrese dureza de agua' 
-            keyboardType='numeric'
-            onChangeText={(text) => formik.setFieldValue("durezaAgua", text)}
-            errorMessage={formik.errors.durezaAgua}
-      />
-      <Text style={styles.textTitle}>Datos de tipo de fertilizante utilizado</Text> 
-      <Input 
-            placeholder='Ingrese tipo de fertilizante'
-            onChangeText={(text) => formik.setFieldValue("tipoFertilizante", text)}
-            errorMessage={formik.errors.tipoFertilizante}
-      />
-      <Input 
-            placeholder='Ingrese proveedor de fertilizante'
-            onChangeText={(text) => formik.setFieldValue("proveedorFertilizante", text)}
-            errorMessage={formik.errors.proveedorFertilizante}
-      />
-      <Input 
-            placeholder='Ingrese marca de fertilizante'
-            onChangeText={(text) => formik.setFieldValue("marcaFertilizante", text)}
-            errorMessage={formik.errors.marcaFertilizante}
-      />
-      <Text style={styles.textTitle}>Datos de tipo de recipiente </Text> 
-      <Input 
-            placeholder='Ingrese tipo de recipiente'
-            onChangeText={(text) => formik.setFieldValue("tipoRecipiente", text)}
-            errorMessage={formik.errors.tipoRecipiente}
-      />
-      <Input 
-            placeholder='Ingrese proveedor de recipiente'
-            onChangeText={(text) => formik.setFieldValue("proveedorRecipiente", text)}
-            errorMessage={formik.errors.proveedorRecipiente}
-      />
-      <Input 
-            placeholder='Ingrese marca de recipiente'
-            onChangeText={(text) => formik.setFieldValue("marcaRecipiente", text)}
-            errorMessage={formik.errors.marcaRecipiente}
-      />
-      <Input 
-            placeholder='Ingrese volumen de recipiente CC' 
-            keyboardType='numeric'
-            onChangeText={(text) => formik.setFieldValue("volumenRecipiente", text)}
-            errorMessage={formik.errors.volumenRecipiente}
-      />
-      <Text style={styles.textTitle}>Datos de tipo de iluminación aplicada </Text> 
-      <Input 
-            placeholder='Ingrese tipo de iluminación'
-            onChangeText={(text) => formik.setFieldValue("tipoIluminacion", text)}
-            errorMessage={formik.errors.tipoIluminacion}
-      />
-      <Input 
-            placeholder='Ingrese proveedor de iluminación'
-            onChangeText={(text) => formik.setFieldValue("proveedorIluminacion", text)}
-            errorMessage={formik.errors.proveedorIluminacion}
-      />
-      <Input 
-            placeholder='Ingrese marca de iluminación'
-            onChangeText={(text) => formik.setFieldValue("marcaIluminacion", text)}
-            errorMessage={formik.errors.marcaIluminacion}
-      />
-      <Input 
-            placeholder='Ingrese potencia de iluminación W/h' 
-            keyboardType='numeric'
-            onChangeText={(text) => formik.setFieldValue("potenciaIluminacion", text)}
-            errorMessage={formik.errors.potenciaIluminacion}
-      />
+       <RNPickerSelect
+             useNativeAndroidPickerStyle={false} 
+             style={{
+                        inputAndroid:{
+                        fontSize: 16,
+                        color:"#716E6C",
+                        height:50,
+                        width:365,           
+                        marginBottom:15,                 
+                        textAlign:"left",
+                        borderWidth: 1,
+                        borderColor: 'gray',
+                        borderRadius: 8,
+                        paddingLeft:8,
+                        paddingRight:30
+                        },
+                        inputIOS: {
+                               color: '#716E6C',
+                               paddingTop: 15,
+                               fontSize: 18,
+                               paddingHorizontal: 10,
+                               paddingBottom: 15,
+                               marginBottom:20,
+                               borderWidth: 1,
+                               borderColor: 'gray',
+                               borderRadius: 8,
+                        },
+             }}
+                 placeholder={{ label: "Selecciona dispositivo de toma de muestra", value: null, color:'gray' }}
+                 items={[
+                     { label: "Lápiz Xiaomi TDS", value: "Lápiz Xiaomi TDS" },
+                     { label: "Lápiz genérico TDS", value: "Lápiz genérico TDS" },
+                 ]}
+                 onValueChange={(value) => formik.setFieldValue("lapiz",value)}
+                 errorMessage={formik.errors.lapiz}
+            />  
       <Input 
             placeholder='Ingrese descripción de la muestra' 
             multiline={true}
             inputContainerStyle={styles.textArea}
-            onChangeText={(text) => formik.setFieldValue("descripcionMuestra", text)}
-            errorMessage={formik.errors.descripcionMuestra}
+            onChangeText={(text) => formik.setFieldValue("descripcion", text)}
+            errorMessage={formik.errors.descripcion}
       />
-
     </View>
+    <MapForm show={showMap} close={onOpenCloseMap} formik={formik}/>
+    </>
   )
+}
+
+const getColorIconMap = (formik) => {
+       if(formik.errors.location) return "red";
+       if(formik.values.location) return "#33A5FF";
+       return "#c2c2c2";
 }

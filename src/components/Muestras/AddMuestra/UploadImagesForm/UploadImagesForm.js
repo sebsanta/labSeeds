@@ -33,7 +33,7 @@ export function UploadImagesForm(props) {
        const blob = await response.blob();
 
        const storage = getStorage();
-       const storageRef = ref(storage, `muestras/${uuid()}`);
+       const storageRef = ref(storage, `Locaciones/${uuid()}`);
 
        uploadBytes(storageRef, blob).then((snapshot) => {
          updatePhotosMuestra(snapshot.metadata.fullPath )

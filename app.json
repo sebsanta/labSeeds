@@ -21,7 +21,24 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.seb_snow.proyectogeo",
+      "config":{
+        "googleMaps":{
+          "apiKey":"AIzaSyCd761OvxB280CfLEv0UvDm6mKkgzUlXww"
+        }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.LOCATION_HARDWARE",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission-group.LOCATION"
+
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,6 +50,17 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f52d14cf-81b4-42a0-bcec-69b6e26e0763"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f52d14cf-81b4-42a0-bcec-69b6e26e0763"
+    }
   }
 }

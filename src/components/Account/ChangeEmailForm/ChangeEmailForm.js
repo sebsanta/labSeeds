@@ -38,7 +38,7 @@ export function ChangeEmailForm(props) {
                 onReload();
                 onClose();
             } catch (error) {
-                console.log(error)
+              //  console.log(error)
                 Toast.show({
                     type:"error",
                     position:"bottom",

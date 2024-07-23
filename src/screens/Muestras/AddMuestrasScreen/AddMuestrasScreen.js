@@ -26,14 +26,14 @@ const formik = useFormik({
       newData.id = uuid()
       newData.createdAt = new Date();
 
-      const myDb = doc(db, "muestras", newData.id);
+      const myDb = doc(db, "Locaciones", newData.id);
       await setDoc(myDb,newData);
 
       navigation.goBack(); 
 
 
     } catch (error) {
-      console.log(error)
+     // console.log(error)
     }
   }
 })

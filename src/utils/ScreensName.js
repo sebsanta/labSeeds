@@ -1,7 +1,9 @@
 const muestraStack = {
     tab: "MuestraTab",
     muestras: "Muestras",
-    addMuestra: "AddMuestra"
+    addMuestra: "AddMuestra",
+    muestra: "Muestra",
+    addLecturaScreen: "AddLecturaScreen",
 };
 
 const rankingStack = {

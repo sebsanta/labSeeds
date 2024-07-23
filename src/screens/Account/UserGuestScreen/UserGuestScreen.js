@@ -16,10 +16,10 @@ export function UserGuestScreen() {
   return (
     <ScrollView centerContent={true} style={styles.content}>
         <Image source={require("../../../../assets/img/agua-suelo.jpeg")} style={styles.image} />
-        <Text style={styles.title}>Consulta tu perfil de Seeds-Lab</Text>
-        <Text style={styles.parrafo}>¿Has tenido que registrar el crecimiento de tus plantas?. ¿Has registrado los productos que utilizas para su crecimiento, monitoreo y
-              calidad?. Utiliza esta aplicación para mantener el registro de tu laboratorio de crecimiento de almácigos de diferentes tipos de plantas y compara su crecimento 
-              respecto a otras.
+        <Text style={styles.title}>Consulta tu perfil de QWater</Text>
+        <Text style={styles.parrafo}>Registra la calidad del agua mediante esta App. Esto te permite tener la trazabilidad el calidad del agua
+        en donde estés pudiendo compararla con la que tomas en la llave. Es importante destacar que estas muestras indican la dureza, presencia de sales 
+        concentradas y metales pesados, por lo tanto es importante que tomes precauiciones antes de beber desde alguna vertiente.
         </Text>
         <View style={styles.contents}>
         <Button 

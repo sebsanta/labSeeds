@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, Text } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -12,7 +13,9 @@ import { styles } from './MuestraScreen.styles';
 export function MuestraScreen(props){
     const { navigation } = props;
     const [currentUser, setCurrentUser] = useState(null);
-    const [muestras, setMuestras] = useState(null)
+    const [locaciones, setLocaciones] = useState(null);
+    const [locacion, setLocacion] = useState(null);
+
 
     useEffect(() => {
         const auth = getAuth();
@@ -21,16 +24,17 @@ export function MuestraScreen(props){
         })
     },[]);
 
+
     //trae la colección de muestras de firebase
     useEffect(() => {
         const q = query(
-            collection(db, "muestras"),
+            collection(db, "Locaciones"),
             orderBy("createdAt", "desc")
             );
     //guarda en una lista el listado de muestras
         onSnapshot(q, (snapshot) => {
-            console.log(snapshot.docs);
-            setMuestras(snapshot.docs);
+           // console.log(snapshot.docs);
+            setLocaciones(snapshot.docs);
 
         })
     },[]);
@@ -44,10 +48,10 @@ export function MuestraScreen(props){
     };
     return(
         <View style={styles.content}>
-            {!muestras ? (
+            {!locaciones ? (
                     <LoadingModal show text="Cargando"/>
                 ):(
-                    <ListMuestra muestras={muestras}/>
+                    <ListMuestra locaciones={locaciones} />
                 )}
 
            
